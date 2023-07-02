@@ -6,22 +6,26 @@
 #
 
 import os
-
+import pathlib
+import platform
 directory = input('Input path to folder with music:\n')
-
+exten = ['.flac','.mp3','.m4a','.wav','.wma','.wmc']
 def make_playlist(dir,playlist_file,mode):
     try:
         playlist = open(f'{playlist_file}.txt',f'{mode}',encoding='utf-8')
         for filename in os.listdir(dir):
                 file = os.path.join(dir, filename)
-                if os.path.isfile(file):
+                if os.path.isfile(file) and pathlib.Path(filename).suffix in exten:
                     playlist.write(f'{file}\n')
         print('Succsessfuly made a playlist file!')
     except:
         print('Something went wrong ...')
 
 def get_filename(dir):
-    dir = directory.split('/')
+    if platform.system() == 'Linux':
+        dir = directory.split('/')
+    else:
+        dir = directory.split('\\')
     if dir[-1]:
         filename = dir[-1]
     else:
@@ -34,9 +38,9 @@ try:
     f.close()
     make_playlist(directory,filename,'a')
 except:
-    filename = get_filename(directory)
     choice = input('File alredy exsist, do you want to override it? Y/N \n')
     if choice.lower() == 'y':
+        filename = get_filename(directory)
         make_playlist(directory,filename,'w')
     else:
         print('No changes were made')
