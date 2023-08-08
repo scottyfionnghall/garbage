@@ -19,10 +19,10 @@ class Card:
         """
         Function to print out a reading using card info.
         """
-        
-        print(f'{self.name}')
-        print(f'{self.description}')
-        print(f'{self.interpretation}')
+
+        print(f'Card name: {self.name}\n')
+        print(f'Description: {self.description}\n')
+        print(f'Interpretation: {self.interpretation}')
 
 cards = open('tarot.json','r')
 cards = json.load(cards)
